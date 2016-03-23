@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>noobtuts - Unity 2D Arkanoid Tutorial</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width; initial-scale=1; maximum-scale=1" />
+  <meta name="description" content="noobtuts.com - Talk to me like I'm five!" />
+  <meta name="keywords" content="noobtuts, gamedevelopment, tutorials, make a game" />
+  <meta name="robots" content="index, follow" />
+  <link rel="stylesheet" href="http://noobtuts.com/assets/styles/styles.css" />
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-36008404-2', 'noobtuts.com');
+    ga('send', 'pageview');  
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1><a href="http://noobtuts.com/"><img src="http://noobtuts.com/assets/images/logo.png" alt="noobtuts" /></a></h1>
+  </header><!-- vis2k: nav not working in older IE versions
+<nav class="menu">
+-->
+<div id="menu">
+  <ul>
+        <li><a href="http://noobtuts.com/">Tutorials</a></li>
+        <li><a href="http://noobtuts.com/articles">Articles</a></li>
+        <li><a href="http://noobtuts.com/premium">Premium</a></li>
+        <li><a href="http://noobtuts.com/about">About</a></li>
+      </ul>
+</div>
+<!-- vis2k: nav not working in older IE versions
+</nav>
+-->
+
+<section class="content">
+
+  <article>
+    <h1>Unity 2D Arkanoid Tutorial</h1>
+    <p><img src="http://noobtuts.com/content/unity/2d-arkanoid-game/arkanoid_preview.png" title="arkanoid_preview" alt="Unity 2D Arkanoid Game" /></p>
+
+<h2>Foreword</h2>
+
+<p>Let's make an <a href="http://en.wikipedia.org/wiki/Arkanoid">Arkanoid</a> clone with only <strong>37 lines of code</strong>! The original Arkanoid was released a long time ago in 1986, but is still highly addictive and thanks to its arcade style nature it's very easy to develop in Unity.</p>
+
+<p>As usual, everything will be explained as easy as possible so everyone can understand it.</p>
+
+<p>Here is a preview of the final game:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/arkanoid_preview.gif" title="arkanoid_preview" alt="Unity 2D Arkanoid Game" /></p>
+
+<h2>Requirements</h2>
+
+<h3>Knowledge</h3>
+
+<p>This is a beginner Tutorial where no advanced skills are required. Only the Unity basics are somewhat useful to know. If you don't know the Unity basics, feel free to either try and see how far you get or read one of our easier <a href="http://noobtuts.com/unity">Unity Tutorials</a> like <a href="http://noobtuts.com/unity/2d-pong-game">Unity 2D Pong Game</a> first.</p>
+
+<h3>Unity Version</h3>
+
+<p>Our 2D Arkanoid Tutorial will use <strong>Unity 5.3.0f4</strong>. Newer versions should work fine as well, older versions may or may not work. The free version of Unity 5 now comes with all the engine features, which makes it the recommended version.</p>
+
+<h2>Project Setup</h2>
+
+<p>Let's make a game! We will start Unity and select <strong>New Project</strong>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/new_project.png" title="new_project" alt="Unity New Project" /></p>
+
+<p>We will name it <strong>arkanoid</strong>, select any location like <strong>C:&#92;</strong>, select <strong>2D</strong> and click <strong>Create Project</strong>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/project_wizard_create_2d.png" title="project_wizard_create_2d" alt="Unity Create new 2D Project" /></p>
+
+<p>Now we can adjust the Camera to our needs. At first we select the <strong>Main Camera</strong> GameObject in the <strong>Hierarchy</strong>, afterwards we adjust the Background Color to something dark and modify the <strong>Size</strong> like shown in the following image:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/camera_inspector.png" title="camera_inspector" alt="Camera in Inspector" /><br />
+<em>Note: the size is pretty much the zoom factor of the camera. We modified it so the overall game will look just about right later on.</em></p>
+
+<h2>The Hexagon Background Pattern</h2>
+
+<p>The original Arkanoid game uses a blue hexagon pattern as background. We can create a similar pattern with our drawing tool of choice:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/hexagon_pattern.png" title="hexagon_pattern" alt="Arkanoid Hexagon Pattern" /><br />
+<em>Note: right click on the image, select <strong>Save As...</strong>, navigate to the project's <strong>Assets</strong> folder and save it in a new <strong>Sprites</strong> folder.</em></p>
+
+<p>Let's select the Hexagon Pattern Image in the <strong>Project Area</strong>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/hexagon_pattern_selected.png" title="hexagon_pattern_selected" alt="Hexagon Pattern selected" /></p>
+
+<p>And then modify the Import Settings in the <strong>Inspector</strong>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/hexagon_pattern_importsettings.png" title="hexagon_pattern_importsettings" alt="Hexagon Pattern ImportSettings" /><br />
+<em>Note: this tells Unity how to load the image, which compression to use (none in our case) and how big it should be in the final game (exact same size in our case).</em></p>
+
+<p>Now we can drag the Hexagon Image from the <strong>Project Area</strong> into the <strong>Hierarchy</strong> in order to make it part of the game world:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/hexagon_pattern_into_hierarchy.png" title="hexagon_pattern_into_hierarchy" alt="Drag Hexagon Pattern into Hierarchy" /></p>
+
+<p>So far, so good.</p>
+
+<h3>The Sorting Layer</h3>
+
+<p>We are making a 2D game and there will be situations where several images are drawn on top of each other, for example when the ball and the hexagon pattern are both drawn.</p>
+
+<p>Let's tell Unity that our hexagon pattern is supposed to be in the background to make sure that the ball is always drawn on top of it <em>(hence visible)</em>.</p>
+
+<p>We can use a <strong>Sorting Layer</strong> for this. We can change the hexagon pattern's Sorting Layer if we take a look at the <strong>Sprite Renderer</strong> component in the <strong>Inspector</strong>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/hexagon_spriterenderer_defaultlayer.png" title="hexagon_spriterenderer_defaultlayer" alt="Hexagon SpriteRenderer with default sorting layer" /></p>
+
+<p>Let's select <strong>Add Sorting Layer..</strong> from the <strong>Sorting Layer</strong> list, then add a <strong>Background</strong> layer and move it to the first position like shown below:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/sortinglayer_background.png" title="sortinglayer_background" alt="Background Sorting Layer" /><br />
+<em>Note: Unity draws the layers from top to bottom, hence whatever should be in the background will be at the top of the list.</em></p>
+
+<p>Now we can select the hexagon pattern again and assign our new <strong>Background</strong> Sorting Layer to it:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/hexagon_spriterenderer_backgroundlayer.png" title="hexagon_spriterenderer_backgroundlayer" alt="Hexagon Pattern SpriteRenderer with Background Sorting Layer" /></p>
+
+<h2>Adding the Borders</h2>
+
+<h3>The Border Images</h3>
+
+<p>We will add borders to make sure that the ball won't just fly out of the game. We will need one image for each border:</p>
+
+<p><img src="http://noobtuts.com/content/unity/2d-arkanoid-game/border_top.png" title="border_top" alt="Arkanoid Top Border" /> </p>
+
+<p><img src="http://noobtuts.com/content/unity/2d-arkanoid-game/border_left.png" title="border_left" alt="Arkanoid Left Border" /> &nbsp; &nbsp; &nbsp; <img src="http://noobtuts.com/content/unity/2d-arkanoid-game/border_right.png" title="border_right" alt="Arkanoid Right Border" /><br />
+<em>Note: right click each image, select <strong>Save As...</strong> and save them all in the project's <strong>Assets/Sprites</strong> folder.</em></p>
+
+<h3>Border ImportSettings</h3>
+
+<p>We will use the same Import Settings that we used before:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/border_importsettings.png" title="border_importsettings" alt="Border ImportSettings" /></p>
+
+<p>Now we can drag the borders from the <strong>Project Area</strong> into the <strong>Hierarchy</strong> and then position them in the <strong>Scene</strong> so that they are outside of the hexagon image:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/borders_positioned.png" title="borders_positioned" alt="Borders Positioned" /></p>
+
+<h3>Border Physics</h3>
+
+<p>At the moment our borders are only images. In order to make the ball collide with them we will have to add a Collider to each border. We can do this by first selecting them in the <strong>Hierarchy</strong>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/borders_in_hierarchy_selected.png" title="borders_in_hierarchy_selected" alt="Borders in Hierarchy" /></p>
+
+<p>Afterwards we can take a look over to the <strong>Inspector</strong> and select <strong>Add Component</strong>-><strong>Physics 2D</strong>-><strong>Box Collider 2D</strong>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/borders_collider.png" title="borders_collider" alt="Borders with Collider" /></p>
+
+<p>Now the borders are part of the physics world. They still look exactly the same, but instead of being just an image they are now physical walls, too <em>(because of the Collider)</em>.</p>
+
+<h2>The Racket</h2>
+
+<h3>The Racket Image</h3>
+
+<p>Let's create the racket <em>(called Vaus in the original game)</em>. The player will be able to move the racket horizontally to prevent the ball from falling out of the game.</p>
+
+<p>As usual we will begin by drawing a racket image:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/racket.png" title="racket" alt="Arkanoid Racket" /><br />
+<em>Note: right click on the image, select <strong>Save As...</strong> and save it in the project's <strong>Assets/Sprites</strong> folder.</em></p>
+
+<h3>Importing the Racket</h3>
+
+<p>We will use the same Import Settings that we used for all other images in our Arkanoid Tutorial:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/racket_importsettings.png" title="racket_importsettings" alt="Racket ImportSettings" /></p>
+
+<p>Now we can drag the Racket from the <strong>Project Area</strong> into the <strong>Hierarchy</strong> and position it on the bottom of our game:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/racket_ingame.png" title="racket_ingame" alt="Racket InGame" /></p>
+
+<h3>Racket Physics</h3>
+
+<p>Like before, we do want the racket to be part of the physics world because the ball is supposed to collide with it later on. Let's select the racket in the <strong>Hierarchy</strong> and then press <strong>Add Component</strong>-><strong>Physics 2D</strong>-><strong>Box Collider 2D</strong> in the <strong>Inspector</strong>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/racket_collider.png" title="racket_collider" alt="Racket Collider" /></p>
+
+<p>There are some more physics to do. The player should be able to move the racket to the left and to the right, and everything in the physics world that is supposed to move around will need a <strong>Rigidbody</strong>. A <strong>Rigidbody</strong> takes care of all kinds of things like velocity and gravity, but for now it's enough to remember that everything physical that moves through the game world will need a <strong>Rigidbody</strong>.</p>
+
+<p>We can add a <strong>Rigidbody</strong> to the racket by selecting <strong>Add Component</strong>-><strong>Physics 2D</strong>-><strong>Rigidbody 2D</strong> in the <strong>Inspector</strong>. Afterwards we can modify the <strong>Rigidbody 2D</strong> to disable <strong>Gravity</strong> <em>(otherwise the racket would fall out of the game)</em> and make it always have a <strong>Fixed Angle</strong> <em>(so that it never rotates)</em>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/racket_rigidbody.png" title="racket_rigidbody" alt="Racket Rigidbody" /></p>
+
+<h3>Racket Movement</h3>
+
+<p>The player should be able to move the racket horizontally. This kind of feature can be added with <strong>Scripting</strong>. Let's select <strong>Add Component</strong>-><strong>New Script</strong> in the <strong>Inspector</strong>, name it <strong>Racket</strong> and select <strong>CSharp</strong> for the language:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/racket_script_create.png" title="racket_script_create" alt="Create Racket Script" /></p>
+
+<p>Unity then creates the new Script and automatically adds it to our racket. Let's also take a look at our <strong>Project Area</strong> and move the Script into a new <strong>Scripts</strong> folder, just to keep things clean:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/racket_script_projectarea.png" title="racket_script_projectarea" alt="Racket Script in Project Area" /></p>
+
+<p>Let's open the Script by double clicking it. Here is how it looks:<br />
+<pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br />
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br />
+<br />
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Racket <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">&#123;</span><br />
+<br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Update is called once per frame</span><br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Update <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre></p>
+
+<p>Our <strong>Start</strong> function is automatically called by Unity when starting the game. Our <strong>Update</strong> function is automatically called over and over again, roughly 60 times per second.</p>
+
+<p>There is yet another type of <strong>Update</strong> function, it's called <strong>FixedUpdate</strong>. It's also called over and over again, but in a fixed time interval. Unity's Physics are calculated in the exact same time interval, so it's always a good idea to use <strong>FixedUpdate</strong> when doing Physics stuff <em>(our racket has a RigidBody and a Collider, which makes it Physics stuff)</em>.</p>
+
+<p>We can remove the <strong>Start</strong> and <strong>Update</strong> functions and create a <strong>FixedUpdate</strong> function now:<br />
+<pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br />
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br />
+<br />
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Racket <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">&#123;</span><br />
+<br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> FixedUpdate <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre><br />
+<em>Note: it's important that we name it exactly <strong>FixedUpdate</strong> because this is the name that Unity expects. We can also make functions with different names, but they wouldn't automatically be called by Unity then.</em></p>
+
+<p>We will use the Rigidbody's <strong>velocity</strong> property to make the racket move. The velocity is always the <strong>movement direction</strong> multiplied by the <strong>movement speed</strong>. It is of type <strong>Vector2</strong>, and here are some Vector2 examples:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/vector2_directions.png" title="vector2_directions" alt="Vector2 Directions" /></p>
+
+<p>Let's add a <strong>Speed</strong> variable to our Script:<br />
+<pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br />
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br />
+<br />
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Racket <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Movement Speed</span><br />
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">float</span> speed <span style="color: #008000;">=</span> <span style="color: #FF0000;">150</span><span style="color: #008000;">;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> FixedUpdate <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre></p>
+
+<p>The player should be able to move the racket by pressing either the <strong>right</strong>/<strong>left</strong> arrow keys, or the <strong>A</strong>/<strong>D</strong> keys, or perhaps even a gamepad's stick. We could either check all of those keys manually, or we could use Unity's <a href="http://docs.unity3d.com/ScriptReference/Input.GetAxisRaw.html">GetAxisRaw</a> function to get the <strong>Horizontal</strong> input. It will return <strong>-1</strong> for <strong>left</strong>, <strong>0</strong> for <strong>no direction</strong> and <strong>1</strong> for <strong>right</strong>:<br />
+<pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #6666cc; font-weight: bold;">void</span> FixedUpdate <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Get Horizontal Input</span><br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> h <span style="color: #008000;">=</span> Input<span style="color: #008000;">.</span><span style="color: #0000FF;">GetAxisRaw</span><span style="color: #008000;">&#40;</span><span style="color: #666666;">&quot;Horizontal&quot;</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre></p>
+
+<p>Now we can set the <strong>velocity</strong> to the movement direction multiplied by the speed:<br />
+<pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #6666cc; font-weight: bold;">void</span> FixedUpdate <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Get Horizontal Input</span><br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> h <span style="color: #008000;">=</span> Input<span style="color: #008000;">.</span><span style="color: #0000FF;">GetAxisRaw</span><span style="color: #008000;">&#40;</span><span style="color: #666666;">&quot;Horizontal&quot;</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Set Velocity (movement direction * speed)</span><br />
+&nbsp; &nbsp; GetComponent<span style="color: #008000;">&lt;</span>Rigidbody2D<span style="color: #008000;">&gt;</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">.</span><span style="color: #0000FF;">velocity</span> <span style="color: #008000;">=</span> Vector2<span style="color: #008000;">.</span><span style="color: #0000FF;">right</span> <span style="color: #008000;">*</span> h <span style="color: #008000;">*</span> speed<span style="color: #008000;">;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre><br />
+<em>Note: we access the <strong>Rigidbody2D</strong> component by using the <strong>GetComponent</strong> function. Afterwards we set calculate the <strong>direction</strong> by multiplying <strong>Vector2.right</strong> with <strong>h</strong>. If <strong>h</strong> was <strong>-1</strong> then it will result in <strong>-Vector2.right</strong> (which is left). If <strong>h</strong> was <strong>0</strong> then it will result in <strong>Vector2.zero</strong> (which is no direction). If <strong>h</strong> was <strong>1</strong> then it results in <strong>Vector2.right</strong> (which is right). Afterwards we multiply it by <strong>speed</strong> to make it move fast enough.</em></p>
+
+<p>This is all we had to do to make the racket move. If we press play then we can now move the racket:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/racket_movement.gif" title="racket_movement" alt="Racket Movement" /></p>
+
+<h2>The Ball</h2>
+
+<h3>The Ball Image</h3>
+
+<p>It's time to add the Ball. Like before, we will begin by drawing some kind of ball imagine:</p>
+
+<ul>
+<li><a href="http://noobtuts.com/content/unity/2d-arkanoid-game/ball.png">Ball.png</a><br />
+<em>Note: right click on the link, select <strong>Save As...</strong> and save it in the project's <strong>Assets/Sprites</strong> folder.</em></li>
+</ul>
+
+<p>We will use the following <strong>Import Settings</strong> for the ball image:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/ball_importsettings.png" title="ball_importsettings" alt="Ball ImportSettings" /></p>
+
+<p>Afterwards we can drag the ball from the <strong>Project Area</strong> into the <strong>Hierarchy</strong> in order to add it to our game world. We will position it slightly above the racket:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/ball_in_scene.png" title="ball_in_scene" alt="Arkanoid Ball in Scene" /></p>
+
+<h3>The Ball Collider</h3>
+
+<p>The ball should be part of the physics world, so let's select it in the <strong>Hierarchy</strong> and then press <strong>Add Component</strong>-><strong>Physics 2D</strong>-><strong>Box Collider 2D</strong> to add a Collider:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/ball_collider.png" title="ball_collider" alt="Ball Collider" /></p>
+
+<p>The ball should also bounce off walls. If it flies directly towards a wall then it should bounce off into the opposite direction. If it hits the wall in a <strong>45°</strong> angle then it should bounce off in a <strong>-45°</strong> angle <em>(and so on)</em>. The math behind this is rather easy and could be done with a Script, but we will do it the easiest way possible by assigning a <strong>Physics Material</strong> to the Ball Collider. Physics Materials contain information about the physical aspects of Colliders like <strong>Friction</strong> and <strong>Bounciness</strong>.</p>
+
+<p>Let's right click in the <strong>Project Area</strong>, choose <strong>Create</strong>-><strong>Physics2D Material</strong> and name it <strong>BallMaterial</strong>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/ballmaterial_projectarea.png" title="ballmaterial_projectarea" alt="Ball Material in Project Area" /></p>
+
+<p>Afterwards we can take a look in the <strong>Inspector</strong> and adjust the material properties in order to make it bounce off:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/ballmaterial_inspector.png" title="ballmaterial_inspector" alt="Ball Material in Inspector" /></p>
+
+<p>Now we just have to drag the material from the <strong>Project Area</strong> into the <strong>Material</strong> slot of the Ball's Collider:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/ball_collider_with_material.png" title="ball_collider_with_material" alt="Ball Collider with Physics Material" /></p>
+
+<p>Now the ball will bounce off when it hits a wall.</p>
+
+<h3>The Ball Rigidbody</h3>
+
+<p>The ball is already part of the physics world, but everything moving should always have a <strong>Rigidbody</strong> attached to it. We can add one to our ball by selecting <strong>Add Component</strong>-><strong>Physics 2D</strong>-><strong>Rigidbody 2D</strong> in the <strong>Inspector</strong>.</p>
+
+<p>A few Rigidbody modifications are required:</p>
+
+<ul>
+<li>The mass should be rather small so it doesn't push away the racket</li>
+<li>Gravity should be disabled</li>
+<li>Interpolation should be enabled and Collision Detection should be set to Continuous to make Physics as exact as possible</li>
+</ul>
+
+<p><img src="http://noobtuts.com/content/unity/2d-arkanoid-game/ball_rigidbody.png" title="ball_rigidbody" alt="Ball Rigidbody" /><br />
+<em>Note: the modifications may look like advanced physics stuff, but no worries. The common way to find out these settings is by testing the game and then modifying the Rigidbody step by step to get the effects that we want.</em></p>
+
+<p>If we would press Play now then the ball wouldn't move at all, because it has no default velocity. Let's select <strong>Add Component</strong>-><strong>New Script</strong> in the <strong>Inspector</strong>, name it <strong>Ball</strong> and select <strong>CSharp</strong> for the language. We will also move it into our <strong>Scripts</strong> folder in the <strong>Project Area</strong> and then open it:<br />
+<pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br />
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br />
+<br />
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Ball <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">&#123;</span><br />
+<br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Update is called once per frame</span><br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Update <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre></p>
+
+<p>We won't need the <strong>Update</strong> function, so let's remove it:<br />
+<pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br />
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br />
+<br />
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Ball <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">&#123;</span><br />
+<br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre></p>
+
+<p>Let's use the Rigidbody's <strong>velocity</strong> property to make it move <strong>upwards</strong> by a certain <strong>speed</strong>:<br />
+<pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br />
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br />
+<br />
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Ball <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Movement Speed</span><br />
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">float</span> speed <span style="color: #008000;">=</span> 100<span style="color: #008000;">.</span>0f<span style="color: #008000;">;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; GetComponent<span style="color: #008000;">&lt;</span>Rigidbody2D<span style="color: #008000;">&gt;</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">.</span><span style="color: #0000FF;">velocity</span> <span style="color: #008000;">=</span> Vector2<span style="color: #008000;">.</span><span style="color: #0000FF;">up</span> <span style="color: #008000;">*</span> speed<span style="color: #008000;">;</span><br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre></p>
+
+<p>We can press play to see the Ball bounce off the borders:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/ball_bouncing.gif" title="ball_bouncing" alt="Ball Bouncing off" /></p>
+
+<h3>The Ball <-> Racket Collision Angle</h3>
+
+<p>We are getting closer to the finish line already. We will now add a cool game play feature to the ball vs. racket collision. We want the player to be able to have some control about the ball's outgoing angle when it hits the racket:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/racket_bounce_angles.png" title="racket_bounce_angles" alt="unity-2d-pong-game-racket-bounce-angles" /></p>
+
+<p>Let's open the ball script so we can implement the outgoing angle feature. We will use Unity's <a href="http://docs.unity3d.com/ScriptReference/MonoBehaviour.OnCollisionEnter2D.html">OnCollisionEnter2D</a> function that is automatically called by Unity whenever the ball collides with something else:</p>
+
+<p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br />
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br />
+<br />
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Ball <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Movement Speed</span><br />
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">float</span> speed <span style="color: #008000;">=</span> 100<span style="color: #008000;">.</span>0f<span style="color: #008000;">;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; GetComponent<span style="color: #008000;">&lt;</span>Rigidbody2D<span style="color: #008000;">&gt;</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">.</span><span style="color: #0000FF;">velocity</span> <span style="color: #008000;">=</span> Vector2<span style="color: #008000;">.</span><span style="color: #0000FF;">up</span> <span style="color: #008000;">*</span> speed<span style="color: #008000;">;</span><br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> OnCollisionEnter2D<span style="color: #008000;">&#40;</span>Collision2D col<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// This function is called whenever the ball</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// collides with something</span><br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre></p>
+
+<p>We will need some kind of code that calculates the ball's velocity depending on where it hit the racket.</p>
+
+<p>The value of <strong>y</strong> will always be <strong>1</strong>, because we want it to fly towards the top and not towards the bottom. The value of <strong>x</strong> requires some thought. It will be somewhere between <strong>-1</strong> and <strong>1</strong>, pretty much like this:<br />
+<pre class="highlight " style="white-space: nowrap"><code><span class="html">1 &nbsp;-0.5 &nbsp;0 &nbsp;0.5 &nbsp; 1 &nbsp;&lt;- x value depending on where it was hit<br />
+=================== &nbsp;&lt;- this is the racket</span></code></pre></p>
+
+<p>All we really have to do is find out where the ball is, in relation to the racket. We can do so by simply dividing the ball's <strong>x</strong> coordinate by the racket's <strong>width</strong>. Here is our function for it:<br />
+<pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #6666cc; font-weight: bold;">float</span> hitFactor<span style="color: #008000;">&#40;</span>Vector2 ballPos, Vector2 racketPos,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> racketWidth<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// ascii art:</span><br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">//</span><br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// 1 &nbsp;-0.5 &nbsp;0 &nbsp;0.5 &nbsp; 1 &nbsp;&lt;- x value</span><br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// =================== &nbsp;&lt;- racket</span><br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">//</span><br />
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">return</span> <span style="color: #008000;">&#40;</span>ballPos<span style="color: #008000;">.</span><span style="color: #0000FF;">x</span> <span style="color: #008000;">-</span> racketPos<span style="color: #008000;">.</span><span style="color: #0000FF;">x</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">/</span> racketWidth<span style="color: #008000;">;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre><br />
+<em>Note: we subtract the <strong>racketPos.x</strong> value from the <strong>ballPos.x</strong> value in order to get the relative position.</em></p>
+
+<p>Here is our final <strong>OnCollisionEnter2D</strong> function:<br />
+<pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #6666cc; font-weight: bold;">void</span> OnCollisionEnter2D<span style="color: #008000;">&#40;</span>Collision2D col<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Hit the Racket?</span><br />
+&nbsp; &nbsp; <span style="color: #0600FF; font-weight: bold;">if</span> <span style="color: #008000;">&#40;</span>col<span style="color: #008000;">.</span><span style="color: #0000FF;">gameObject</span><span style="color: #008000;">.</span><span style="color: #0000FF;">name</span> <span style="color: #008000;">==</span> <span style="color: #666666;">&quot;racket&quot;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Calculate hit Factor</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">float</span> x<span style="color: #008000;">=</span>hitFactor<span style="color: #008000;">&#40;</span>transform<span style="color: #008000;">.</span><span style="color: #0000FF;">position</span>,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; col<span style="color: #008000;">.</span><span style="color: #0000FF;">transform</span><span style="color: #008000;">.</span><span style="color: #0000FF;">position</span>,<br />
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; col<span style="color: #008000;">.</span><span style="color: #0000FF;">collider</span><span style="color: #008000;">.</span><span style="color: #0000FF;">bounds</span><span style="color: #008000;">.</span><span style="color: #0000FF;">size</span><span style="color: #008000;">.</span><span style="color: #0000FF;">x</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">;</span><br />
+<br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Calculate direction, set length to 1</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; Vector2 dir <span style="color: #008000;">=</span> <span style="color: #008000;">new</span> Vector2<span style="color: #008000;">&#40;</span>x, <span style="color: #FF0000;">1</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">.</span><span style="color: #0000FF;">normalized</span><span style="color: #008000;">;</span><br />
+<br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Set Velocity with dir * speed</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; GetComponent<span style="color: #008000;">&lt;</span>Rigidbody2D<span style="color: #008000;">&gt;</span><span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span><span style="color: #008000;">.</span><span style="color: #0000FF;">velocity</span> <span style="color: #008000;">=</span> dir <span style="color: #008000;">*</span> speed<span style="color: #008000;">;</span><br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre><br />
+<em>Note: please read through the comments in order to understand what's going on.</em></p>
+
+<p>If we press play, then we can now influence the ball's bouncing direction depending on where it hit the racket.</p>
+
+<h2>Adding Blocks</h2>
+
+<p>It's time for some blocks. After all, Arkanoid is boring without something to destroy.</p>
+
+<p>We will use the following images for our blocks:</p>
+
+<ul>
+<li>Blue: <img src="http://noobtuts.com/content/unity/2d-arkanoid-game/block_blue.png" title="block_blue" alt="Blue Block" /></li>
+<li>Green: <img src="http://noobtuts.com/content/unity/2d-arkanoid-game/block_green.png" title="block_green" alt="Green Block" /></li>
+<li>Pink: <img src="http://noobtuts.com/content/unity/2d-arkanoid-game/block_pink.png" title="block_pink" alt="Pink Block" /></li>
+<li>Red: <img src="http://noobtuts.com/content/unity/2d-arkanoid-game/block_red.png" title="block_red" alt="Red Block" /></li>
+<li>Yellow: <img src="http://noobtuts.com/content/unity/2d-arkanoid-game/block_yellow.png" title="block_yellow" alt="Yellow Block" /></li>
+</ul>
+
+<p><em>Note: right click each image, select <strong>Save As...</strong> and save them all in the project's <strong>Assets/Sprites</strong> folder.</em></p>
+
+<p>Let's select the red block image in our <strong>Project Area</strong> and then use these <strong>Import Settings</strong> in the <strong>Inspector</strong>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/block_importsettings.png" title="block_importsettings" alt="Block Import Settings" /></p>
+
+<p>Like before, we can now drag it from the <strong>Project Area</strong> into the <strong>Hierarchy</strong> and then position it at the top left of our game:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/block_in_scene.png" title="block_in_scene" alt="Block in Scene" /></p>
+
+<p>In order for the block to be part of the physics world, we will select <strong>Add Component</strong>-><strong>Physics 2D</strong>-><strong>Box Collider 2D</strong> in the <strong>Inspector</strong>:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/block_collider.png" title="block_collider" alt="Block Collider" /></p>
+
+<p>We want the block to be destroyed after it was hit by the ball. This kind of behavior is always implemented with a Script. Let's select <strong>Add Component</strong>-><strong>New Script</strong> in the <strong>Inspector</strong>, name it <strong>Block</strong> and select <strong>CSharp</strong> for the language. We will move it into our <strong>Scripts</strong> folder again and then open it:<br />
+<pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br />
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br />
+<br />
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Block <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">&#123;</span><br />
+<br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Use this for initialization</span><br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Start <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Update is called once per frame</span><br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> Update <span style="color: #008000;">&#40;</span><span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; <br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre><br />
+We can remove the <strong>Start</strong> and the <strong>Update</strong> functions, because we won't need them. We are already familiar with the <strong>OnCollisionEnter2D</strong> function, so let's use it again:</p>
+
+<p><pre class="highlight csharp" style="white-space: nowrap"><code><span class="csharp"><span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">UnityEngine</span><span style="color: #008000;">;</span><br />
+<span style="color: #0600FF; font-weight: bold;">using</span> <span style="color: #008080;">System.Collections</span><span style="color: #008000;">;</span><br />
+<br />
+<span style="color: #0600FF; font-weight: bold;">public</span> <span style="color: #6666cc; font-weight: bold;">class</span> Block <span style="color: #008000;">:</span> MonoBehaviour <span style="color: #008000;">&#123;</span><br />
+<br />
+&nbsp; &nbsp; <span style="color: #6666cc; font-weight: bold;">void</span> OnCollisionEnter2D<span style="color: #008000;">&#40;</span>Collision2D collisionInfo<span style="color: #008000;">&#41;</span> <span style="color: #008000;">&#123;</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #008080; font-style: italic;">// Destroy the whole Block</span><br />
+&nbsp; &nbsp; &nbsp; &nbsp; Destroy<span style="color: #008000;">&#40;</span>gameObject<span style="color: #008000;">&#41;</span><span style="color: #008000;">;</span><br />
+&nbsp; &nbsp; <span style="color: #008000;">&#125;</span><br />
+<span style="color: #008000;">&#125;</span></span></code></pre><br />
+<em>Note: <strong>Destroy(this)</strong> would only destroy the Block Script component. If we want to destroy the whole Block, then we always have to use <strong>Destroy(gameObject)</strong>, which destroys the Block's GameObject itself.</em></p>
+
+<p>Afterwards we can duplicate the block a few times <em>(select it in the Hierarchy and then press <strong>Ctrl + D</strong> or <strong>right click</strong> -> <strong>Duplicate</strong>)</em> and then position the copies somewhere else in the Scene:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/block_duplicated.png" title="block_duplicated" alt="Block duplicated" /></p>
+
+<p>We will repeat this process for each of the different block color images in our Project:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/block_all.png" title="block_all" alt="All Blocks" /><br />
+<em>Note: we can reuse our Block Script for the other Blocks, too.</em></p>
+
+<p>And that's it! If we press play then we can enjoy the awesome result of our Unity 2D Arkanoid Tutorial:<br />
+<img src="http://noobtuts.com/content/unity/2d-arkanoid-game/arkanoid_preview.gif" title="arkanoid_preview" alt="Unity 2D Arkanoid Game" /></p>
+
+<h2>Summary</h2>
+
+<p>We just learned how to make a nice little Arkanoid Clone in Unity. We created a project that is fast, clean and state of the art. As usual, now it's up to you to make the game more fun. Here are some improvement ideas:</p>
+
+<ul>
+<li>A collision Sound</li>
+<li>More Levels</li>
+<li>Undestroyable Blocks</li>
+<li>Racket size upgrades</li>
+<li>A Score</li>
+<li>A Win and Lose Screen</li>
+<li>A Menu</li>
+</ul>
+
+<p>Arcade games are just about the best way to learn how to develop a game and how to make it fun. Take your time, play around with it and make it awesome!</p>
+
+    
+        <br />
+    <div id="box">
+    <div>
+      <h2>Download Source Code &amp; Project Files</h2>
+      The <i>Unity 2D Arkanoid Tutorial</i> source code &amp; project files can be downloaded by <a href="/premium">Premium</a> members.<br />
+      <br />
+      <b>All Tutorials. All Source Codes &amp; Project Files. One time Payment.</b><br />
+      <a href="/premium">Get Premium</a> today!
+    </div>
+      </article>
+</section>
+
+  <footer>
+    <p>© 2012-2016 <a href="http://noobtuts.com">noobtuts.com</a></p>
+  </footer>
+
+</body>
+
+</html>
