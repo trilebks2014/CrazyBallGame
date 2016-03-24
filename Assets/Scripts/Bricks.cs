@@ -5,6 +5,8 @@ public class Bricks : MonoBehaviour {
 	public GameObject[] prefab;
 	// Use this for initialization
 	Animator _ani;
+	ArrayBricks arrayBricks = new ArrayBricks();
+
 	void Start () {
 		_ani = gameObject.GetComponent<Animator> ();
 	}
@@ -23,6 +25,7 @@ public class Bricks : MonoBehaviour {
 			Debug.Log ("Item "+randomItem);
 			Instantiate(prefab[randomItem],new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
 		}
+		arrayBricks.nameToIndexAndReturnBrickArray(gameObject.name);
 		_ani.SetInteger ("state", 1);
 	}
 	void detroyBall(){
