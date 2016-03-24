@@ -4,8 +4,9 @@ using System;
 public class Bricks : MonoBehaviour {
 	public GameObject[] prefab;
 	// Use this for initialization
+	Animator _ani;
 	void Start () {
-		
+		_ani = gameObject.GetComponent<Animator> ();
 	}
 	
 	// Update is called once per frame
@@ -22,6 +23,9 @@ public class Bricks : MonoBehaviour {
 			Debug.Log ("Item "+randomItem);
 			Instantiate(prefab[randomItem],new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
 		}
+		_ani.SetInteger ("state", 1);
+	}
+	void detroyBall(){
 		Destroy(gameObject);
 	}
 }
