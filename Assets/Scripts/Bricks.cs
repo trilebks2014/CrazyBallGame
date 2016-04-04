@@ -25,9 +25,11 @@ public class Bricks : MonoBehaviour {
 			Debug.Log ("Item "+randomItem);
 			Instantiate(prefab[randomItem],new Vector2(transform.position.x,transform.position.y),Quaternion.identity);
 		}
+
 		arrayBricks.nameToIndexAndReturnBrickArray(gameObject.name);
 		_ani.SetInteger ("state", 1);
-	}
+	}	
+
 	void detroyBall(){
 		Destroy(gameObject);
 	}

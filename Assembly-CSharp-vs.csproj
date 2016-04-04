@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\ArrayBricks.cs" />
      <Compile Include="Assets\Scripts\Ball.cs" />
      <Compile Include="Assets\Scripts\Bricks.cs" />
+     <Compile Include="Assets\Scripts\GameManagement.cs" />
      <Compile Include="Assets\Scripts\InitiaBricks.cs" />
      <Compile Include="Assets\Scripts\MainScene.cs" />
      <Compile Include="Assets\Scripts\OnePlayer.cs" />
