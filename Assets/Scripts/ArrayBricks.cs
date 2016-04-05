@@ -4,7 +4,7 @@ using System;
 
 public class ArrayBricks : MonoBehaviour {
 	public GameObject brick;
-//	public static int[,] brickArray = new int[100,100];
+
 
 	public int currentRow =-1;
 	const float posStartBrickX= -70f;
@@ -22,7 +22,7 @@ public class ArrayBricks : MonoBehaviour {
 		numberOfBrickInOneLine = (int)(Screen.width / (widthBrick ));
 		numberRowBrickInSceen = (int)(Screen.height / (heightBrick ));
 
-		InvokeRepeating ("UpdateBrick", timeAddingBrick, timeAddingBrick);
+		InvokeRepeating ("UpdateBrick", 0, timeAddingBrick);
 		Debug.Log ("number" + numberOfBrickInOneLine);
 	}
 	void InitalBrick(){
@@ -42,8 +42,7 @@ public class ArrayBricks : MonoBehaviour {
 	public void positionToIndexAndReturnZero(float posX,float posY){
 		int column = (int) Math.Floor((posStartBrickY - posY  ) / heightBrick);
 		int row =(int)Math.Floor((posX - posStartBrickX) / widthBrick);
-//		brickArray [row, column] = 0;
-//		Debug.Log ("Colum And ROw : " + column + row);
+
 	}
 	void DrawBrick(){
 
@@ -66,8 +65,7 @@ public class ArrayBricks : MonoBehaviour {
 		Debug.Log ("row" +row + " column" +column);
 		GameManagement.instance.brickArray[row, column] = 0;
 		Debug.Log ("brickArray[][]="+GameManagement.instance.brickArray [row, column]);
-		Debug.Log ("Beeeeeeeeeeeeeeeeeeeee");
-		Debug.Log ("Beffffffffffffffffffffffffffffffffeeeeeeeeeeeeeeeeeeee");
+
 	}
 	void showArray(){
 		Debug.Log ("AAAA="+numberOfBrickInOneLine);
